@@ -20,7 +20,7 @@ app.post('/register', (request, response) => {
     const user = {...request.body};
 
     const token = jwt.sign({id: user.id}, config.secret, { // Gerando token JWT
-        expiresIn: '1h' // expira em 24 horas
+        expiresIn: 84200 // expira em 24 horas
     });
 
     response
