@@ -1,0 +1,42 @@
+
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    env_file:
+      - .env
+    restart: always
+    environment:
+      - POSTGRES_USER=$USER_DATABASE
+      - POSTGRES_PASSWORD=$PASSWORD_DATABASE
+      - POSTGRES_DB=$NAME_DATABASE
+    ports:
+      - '5432:5432'
+    networks:
+      - backend
+
+  nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nodejs
+    container_name: nodejs
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - POSTGRES_USER=$USER_DATABASE
+      - POSTGRES_PASSWORD=$PASSWORD_DATABASE
+      - POSTGRES_HOSTNAME=$HOST_DB
+      - POSTGRES_PORT=$PORT_DB
+      - POSTGRES_DB=$NAME_DATABASE
+    ports:
+      - "3001:3001"
+    command: npm start
+    networks:
+      - backend
+
+networks:
+  backend:
+    external: true
