@@ -2,38 +2,34 @@
 version: '3.7'
 
 services:
-  postgres:
-    image: postgres
-    container_name: postgres
-    env_file:
-      - .env
-    restart: always
-    environment:
-      - POSTGRES_USER=$USER_DATABASE
-      - POSTGRES_PASSWORD=$PASSWORD_DATABASE
-      - POSTGRES_DB=$NAME_DATABASE
+
+  backend:
+    build: .
+    container_name: backend
+    depends_on:
+      - db
+    command: npm start
     ports:
-      - '5432:5432'
+      - "3001:3001"
+    volumes:
+      - .:/user/app
+    links:
+      - db
     networks:
       - backend
 
-  nodejs:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: nodejs
-    container_name: nodejs
-    restart: unless-stopped
-    env_file: .env
+  db:
+    image: postgres
+    container_name: db
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - /var/lib/postgresql/data
     environment:
       - POSTGRES_USER=$USER_DATABASE
       - POSTGRES_PASSWORD=$PASSWORD_DATABASE
-      - POSTGRES_HOSTNAME=$HOST_DB
-      - POSTGRES_PORT=$PORT_DB
       - POSTGRES_DB=$NAME_DATABASE
-    ports:
-      - "3001:3001"
-    command: npm start
     networks:
       - backend
 

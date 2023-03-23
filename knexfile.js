@@ -5,11 +5,13 @@ const user = process.env.USER_DATABASE;
 const password = process.env.PASSWORD_DATABASE;
 
 module.exports = {
-    client: 'postgresql',
+    client: 'pg',
     connection: {
+        host : 'db',
         database: database,
         user:     user,
-        password: password
+        password: password,
+        port: 5432
     },
 
     migrations: {
