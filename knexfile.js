@@ -8,7 +8,7 @@ const url = process.env.URL;
 module.exports = {
     client: 'pg',
     connection: url || {
-        host : 'db',
+        host : 'localhost',
         database: database,
         user:     user,
         password: password,
