@@ -18,7 +18,6 @@ module.exports = (request, response, next) => {
                 .status(500)
                 .send({auth: false, message: err});
 
-        if (decoded?.id)
-            return next();
+        return next();
     })
 }
