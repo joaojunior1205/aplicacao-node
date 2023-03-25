@@ -1,7 +1,7 @@
 module.exports = app => {
    app.route('/')
        .get(async (request, response) => {
-           return response.status(200);
+           return response.status(200).send('logged');
          app.db('launch')
               .select('id', 'descricao', 'tipo', 'recorrencia', 'valor', 'data_vencimento', 'data_criacao', 'data_atualizacao')
               .then(launch => response.status(200).json({...launch}))
