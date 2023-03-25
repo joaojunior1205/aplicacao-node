@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config/jwtConfig");
-const express = require("express");
 
 module.exports = (request, response, next) => {
     const token = request && request.headers && request.headers['api_key'];
