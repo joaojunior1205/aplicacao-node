@@ -18,6 +18,7 @@ module.exports = (request, response, next) => {
                 .status(500)
                 .send({auth: false, message: err});
 
-        return next();
+        if (decoded)
+            next();
     })
 }
