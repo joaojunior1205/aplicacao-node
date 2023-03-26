@@ -3,7 +3,7 @@ module.exports = app => {
 
     const getLaunch = async (request, response) => {
         const getLaunch = await app.db('launch')
-            .select('id', 'descricao', 'tipo', 'recorrencia', 'valor', 'data_vencimento', 'data_criacao', 'data_atualizacao')
+            .select('*')
             .catch(err => response.status(500).send(err));
 
         response.status(200).send(getLaunch);
@@ -20,6 +20,7 @@ module.exports = app => {
             notExistsOrError(!launch.data_vencimento, 'Preencha data_vencimento');
             notExistsOrError(!launch.data_criacao, 'Preencha data_criacao');
             notExistsOrError(!launch.data_atualizacao, 'Preencha data_atualizacao');
+            notExistsOrError(!launch.qtd_recorrencia, 'Preencha qtd_recorrencia');
 
             app.db('launch')
                 .insert(launch)
