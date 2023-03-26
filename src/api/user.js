@@ -20,7 +20,7 @@ module.exports = app => {
             .select('id', 'nome', 'segundo_nome', 'email', 'data_criacao', 'data_atualizacao', 'data_ultimo_acesso')
             .catch(err => response.status(500).send(err));
 
-        response.status(200).send({...getUsers})
+        response.status(200).send(getUsers)
     }
 
     const newUser = async (request, response) => {

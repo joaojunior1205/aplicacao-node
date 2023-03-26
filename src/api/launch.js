@@ -6,7 +6,7 @@ module.exports = app => {
             .select('id', 'descricao', 'tipo', 'recorrencia', 'valor', 'data_vencimento', 'data_criacao', 'data_atualizacao')
             .catch(err => response.status(500).send(err));
 
-        response.status(200).send({...getLaunch});
+        response.status(200).send(getLaunch);
     }
 
     const newLaunch = (req, res) => {
