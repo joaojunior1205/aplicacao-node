@@ -9,7 +9,7 @@ module.exports = app => {
         if (typeof value === 'string' && !value.trim()) {
             throw msg
         }
-    };
+    }
 
     function notExistsOrError(value, msg) {
         try {
@@ -19,13 +19,13 @@ module.exports = app => {
         }
 
         throw msg;
-    };
+    }
 
     function equalsOrError(valueA, valueB, msg) {
         if (valueA !== valueB) {
             throw msg
-        };
-    };
+        }
+    }
 
     return { existsOrError, notExistsOrError, equalsOrError }
 };

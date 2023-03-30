@@ -3,4 +3,13 @@ NAME_DATABASE= ""
 USER_DATABASE= ""
 PASSWORD_DATABASE= ""
 PORT= ""
+
 URL=postgres://user-name:password@host:5432/name-database
+
+apiKey = ""
+authDomain = ""
+projectId = ""
+storageBucket = ""
+messagingSenderId = ""
+appId = ""
+measurementId = ""
