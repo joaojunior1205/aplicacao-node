@@ -44,7 +44,6 @@ module.exports = app => {
                 response.status(500).send(`Usuário não encontrado!`);
             }
 
-
         } catch (err) {
             response.status(500).send(err);
         }
