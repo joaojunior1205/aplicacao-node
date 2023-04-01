@@ -36,20 +36,44 @@ const insertUser = async (user = {}, token) => {
         data_ultimo_acesso: dateCurrent,
     }
 
-    await db('user')
+    const requestInsertDB = await db('user')
         .insert(sendDB)
         .catch(err => err)
+
+    return requestInsertDB;
 }
 
+const updateUser = async (user = {}, token = null) => {
+    const dateCurrent = new Date().toISOString();
+    const userTemp = {...user};
+
+    const sendDB = {
+        id: user.id,
+        nome: userTemp.nome,
+        segundo_nome: userTemp.segundo_nome,
+        email: userTemp.email,
+        password: userTemp.password,
+        token: token ? token : userTemp.token,
+        data_atualizacao: dateCurrent,
+        data_criacao: userTemp.data_criacao,
+        data_ultimo_acesso: userTemp.data_ultimo_acesso,
+    }
+
+    const run = await db('user')
+        .where({id: user.id, email: user.email})
+        .update(sendDB)
+        .catch(err => err)
+
+    return run;
+};
+
 const getUserFromEmail = async (email) => {
-    await db('user')
+    const run = await db('user')
         .where({email: email})
         .limit(1)
         .catch(err => err)
+
+    return run;
 };
-
-const updateUser = async (user) => {
-
-}
 
 module.exports = {getUserFromEmail, updateUser, insertUser}

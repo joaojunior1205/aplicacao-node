@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/jwtConfig");
 const firebase = require("firebase");
 const {onStartFirebase} = require("../firebase/onStartFirebase");
-const {getUserFromEmail} = require("../controllers/user-controller");
+const {getUserFromEmail, insertUser, updateUser} = require("../controllers/user-controller");
 
 module.exports = app => {
     const refreshToken = async (request, response) => {
@@ -26,13 +26,25 @@ module.exports = app => {
             if (singIn?.operationType !== "signIn")
                 throw  `Error: Auth failed'`;
 
+            // Verifica se o usuário informado já existe no banco de dados.
             const userExists = await getUserFromEmail(user.email);
 
             const token = jwt.sign({email: user.email}, config.secret, { // Gerando token JWT
                 expiresIn: 2526000 // expira em 30 dias
             });
 
-            response.status(200).send({token: token});
+            if (userExists.length > 0) {
+                const runUpdate = await updateUser(userExists[0], token);
+
+                if (runUpdate)
+                    return response.status(200).send({token: token});
+                else
+                    return response.status(500).send(`Falha na atualização do usuário`);
+            } else {
+                response.status(500).send(`Usuário não encontrado!`);
+            }
+
+
         } catch (err) {
             response.status(500).send(err);
         }
